@@ -5,8 +5,30 @@ import ReactDOM from 'react-dom';
 
 
 // Create a react component
+// Browsers don't understand JSX natively; Babel handles JSX to React function
+// translation.
 const App = function() {
-    return <div>Hi there</div>;
+    // JSX can reference JS variables
+    // const buttonText = ['Hi', 'There'];
+    // JS objects are *not* allowed to be referenced inside JSX directly.
+    // We need to specify a property of the object instead of the object itself.
+    // buttonText.text instead of buttonText.
+    const buttonText = { text: 'bruh' };
+    const style = { backgroundColor: 'blue', color: 'white' };
+    return (
+        <div>
+          {/* JSX uses className instead of class, and htmlFor instead of for */}
+          <label className="label" htmlFor="name">Enter name bruh:</label>
+          <input id="name" type="text" />
+          {/* Internal styling is done differently in JSX
+           * the first pair of curly braces indicates JSX interpolation
+           * the second pair of curly braces indicates a JS object
+           * background-color is camel cased into backgroundColor, like we used
+           * to in Angular.
+           */}
+          <button style={style}> {buttonText.text} </button>
+        </div>
+    );
 };
 /*
  * const App = () => {
