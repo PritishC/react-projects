@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 // Create a react component
 // Browsers don't understand JSX natively; Babel handles JSX to React function
 // translation.
-const App = function() {
+const App = () => {
     // JSX can reference JS variables
     // const buttonText = ['Hi', 'There'];
     // JS objects are *not* allowed to be referenced inside JSX directly.
@@ -30,11 +30,6 @@ const App = function() {
         </div>
     );
 };
-/*
- * const App = () => {
- *   return <div>Hi there</div>;
- * };
- */
 
 
 // Take the react component and show it on the screen
