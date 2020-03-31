@@ -1,0 +1,17 @@
+.image-list {
+	/* Grid system in CSS - shoves each of the images into the grid.
+	 * Images may not fit as nicely.
+	 * 1fr = for every column we create, each column should take maximum equal space.
+	 * Each image needs a different grid-row-end CSS property to solve our problem.
+	 * We do that by calculating height and assigning custom grid-row-end.
+	 */
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	grid-gap: 0 10px; /* 0 pixels between each row */
+	/* grid-auto-rows is 10px to make the grid structure more "fine-grained" */
+	grid-auto-rows: 10px;
+}
+
+.image-list img {
+	width: 250px;
+}
