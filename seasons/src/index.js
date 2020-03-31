@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
+import Spinner from './Spinner';
 
 
 /* App lifecycle -:
@@ -33,8 +35,17 @@ import ReactDOM from 'react-dom';
   * `state` can *only* be updated using the function `setState()`
   */
 
+ /* Component lifecycle -:
+  * constructor
+  * render -> content now on screen
+  * componentDidMount -> sit and wait for updates [React specific method that is called the first time the component is shown]
+  * componentDidUpdate -> sit and wait until this component is no longer shown
+  * componentWillUnmount [generally used for cleanup]
+  */
+
 class App extends React.Component {
 	// constructor() is JS specific. render() is required by React.
+	/*
 	constructor(props) {
 		// Good place to initialize state
 		// super() will call the superclass constructor
@@ -49,30 +60,50 @@ class App extends React.Component {
 
 		// Best to call getCurrentPosition() once on app start, as render() is
 		// called several times in the course of the app lifecycle.
+		// However, data loading methods are better off in componentDidMount(),
+		// so put it there.
+	}*/
+
+	// Equivalent to setting this.state inside the constructor method.
+	state = {
+		lat: null,
+		errorMessage: ""
+	};
+
+	componentDidMount() {
+		// Best practices - all data loading methods/network request methods are to be called here!
 		window.navigator.geolocation.getCurrentPosition(
-			(position) => {
-				this.setState({
-					lat: position.coords.latitude
-				});
-			}, // success callback
-			(err) => {
-				// We need not update every property on the state object
-				this.setState({
-					errorMessage: err.message
-				});
-			} // error callback
+			(position) => this.setState({lat: position.coords.latitude}), // success
+			(err) => this.setState({errorMessage: err.message}) // error callback
 		);
 	}
-	render() {
+
+	renderContent() {
+		// This method allows us to keep our customization or
+		// if-else cases and apply some JSX common to all of them
+		// within render().
 		if (this.state.errorMessage && !this.state.lat) {
 			return <div>Error: {this.state.errorMessage}</div>;
 		}
 
 		if (!this.state.errorMessage && this.state.lat) {
-			return <div>Latitude: {this.state.lat}</div>;
+			return <SeasonDisplay lat={this.state.lat} />;
 		}
 
-		return <div>Loading!</div>;
+		return <Spinner message="Please accept the location request" />;
+	}
+
+	/*
+	componentDidUpdate() {
+		console.log("Comp just updated - it re-rendered");
+	}*/
+
+	render() {
+		return (
+			<div className="border red">
+				{this.renderContent()}
+			</div>
+		);
 	}
 }
 
