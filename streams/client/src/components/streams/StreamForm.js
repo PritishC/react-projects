@@ -1,9 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { createStream } from '../../actions';
 
-class StreamCreate extends React.Component {
+class StreamForm extends React.Component {
 	renderError = ({ error, touched }) => {
 		if (touched && error) {
 			return (
@@ -35,7 +33,8 @@ class StreamCreate extends React.Component {
 		// redux-form requires us to wrap the onSubmit callback with handleSubmit.
 		// redux-form handles the preventDefault for us, so we don't need this!
 		// event.preventDefault();
-		this.props.createStream(formValues);
+		// The parent component (StreamCreate or StreamEdit) will pass down a prop callback called onSubmit.
+		this.props.onSubmit(formValues);
 	}
 
 	render() {
@@ -64,9 +63,10 @@ const validate = (formValues) => {
 	return errors;
 };
 
-const formWrapped = reduxForm({
-	form: 'streamCreate',
+export default reduxForm({
+	form: 'streamForm',
 	validate
-})(StreamCreate);
+})(StreamForm);
 
-export default connect(null, { createStream })(formWrapped);
+// StreamForm does not need to call an action creator, so no second argument to connect().
+// And that way, connect() itself is not required since we're not passing any arguments to it.

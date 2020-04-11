@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import StreamCreate from './streams/StreamCreate';
 import StreamEdit from './streams/StreamEdit';
 import StreamList from './streams/StreamList';
 import StreamShow from './streams/StreamShow';
 import StreamDelete from './streams/StreamDelete';
 import Header from './Header';
+import history from '../history';
 
 /* Router gotchas
  * 1. Multiple Route components can match the same URL; all of them will show under the URL in that case.
@@ -15,12 +16,13 @@ import Header from './Header';
  * Use the Link tag instead. <Link to="/pagetwo">Go to Page Two</Link>. The browser history object is listened to by the BrowserRouter
  * component and updated accordingly.
  * 4. BrowserRouter vs HashRouter vs MemoryRouter - BR is hard to deploy in some cases even though it is popular in tutorials. 
+ * Note: Use Router to be able to use a custom history object.
  */
 
 const App = () => {
 	return (
 		<div className="ui container">
-			<BrowserRouter>
+			<Router history={history}>
 				<div>
 					{/* If we want to show a header on all pages, we need to place it outside the
 						Router component. But in this case, the Header contains a Link component.
@@ -28,11 +30,12 @@ const App = () => {
 					<Header></Header>
 					<Route path="/" exact component={StreamList} />
 					<Route path="/streams/new" exact component={StreamCreate} />
-					<Route path="/streams/edit" exact component={StreamEdit} />
+					{/* Use the : character to specify a variable in the URL */}
+					<Route path="/streams/edit/:id" exact component={StreamEdit} />
 					<Route path="/streams/delete" exact component={StreamDelete} />
 					<Route path="/streams/show" exact component={StreamShow} />
 				</div>
-			</BrowserRouter>
+			</Router>
 		</div>
 	);
 };
