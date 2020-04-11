@@ -1,11 +1,17 @@
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStream } from '../../actions';
+import { fetchStream, editStream } from '../../actions';
+import StreamForm from './StreamForm';
 
 class StreamEdit extends React.Component {
 	componentDidMount() {
 		this.props.fetchStream(this.props.match.params.id);
 	}
+
+	onSubmit = (formValues) => {
+		this.props.editStream(this.props.match.params.id, formValues);
+	};
 
 	render() {
 		if (!this.props.stream) {
@@ -13,7 +19,18 @@ class StreamEdit extends React.Component {
 		}
 
 		// props.match.params.id holds our :id variable from the URL
-		return <div>{this.props.stream.title}</div>;
+		// Also, since the StreamForm instance is wrapped inside ReduxForm, we can pass special props
+		// down to ReduxForm. One of them is `initialValues`, which populates the form with initial
+		// values for each field.
+		// We pick only the title and description fields since they're the only ones relevant when
+		// editing the stream.
+		return (
+			<div>
+				<h3>Edit a Stream</h3>
+				<StreamForm initialValues={_.pick(this.props.stream, 'title', 'description')}
+					onSubmit={this.onSubmit}></StreamForm>
+			</div>
+		);
 	}
 }
 
@@ -25,4 +42,4 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchStream })(StreamEdit);
+export default connect(mapStateToProps, { fetchStream, editStream })(StreamEdit);
