@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import StreamCreate from './streams/StreamCreate';
 import StreamEdit from './streams/StreamEdit';
 import StreamList from './streams/StreamList';
@@ -28,12 +28,17 @@ const App = () => {
 						Router component. But in this case, the Header contains a Link component.
 						Link components must be placed inside Router components. */}
 					<Header></Header>
-					<Route path="/" exact component={StreamList} />
-					<Route path="/streams/new" exact component={StreamCreate} />
-					{/* Use the : character to specify a variable in the URL */}
-					<Route path="/streams/edit/:id" exact component={StreamEdit} />
-					<Route path="/streams/delete/:id" exact component={StreamDelete} />
-					<Route path="/streams/show" exact component={StreamShow} />
+					{/* The Switch construct allows React to match only *one* (the first) route in the list
+						of routes below with the one in the URL. Now going to /streams/new will not match both
+						/streams/new and /streams/:id. Sort of like a switch-case programming construct. */}
+					<Switch>
+						<Route path="/" exact component={StreamList} />
+						<Route path="/streams/new" exact component={StreamCreate} />
+						{/* Use the : character to specify a variable in the URL */}
+						<Route path="/streams/edit/:id" exact component={StreamEdit} />
+						<Route path="/streams/delete/:id" exact component={StreamDelete} />
+						<Route path="/streams/:id" exact component={StreamShow} />
+					</Switch>
 				</div>
 			</Router>
 		</div>
