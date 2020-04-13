@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ResourceList from './ResourceList';
 
-class App extends React.Component {
-	state = {
-		resource: 'posts'
-	};
+const App = () => {
+	// Below syntax is array destructuring. We've done object destructuring before.
+	// const [currentValue, setValueCallback] = useState(initialValue)
+	const [resource, setResource] = useState('posts');
 
-	render(){
-		return (
+	return (
+		<div>
 			<div>
-				<div>
-					<button onClick={() => this.setState({ resource: 'posts'})}>Posts</button>
-					<button onClick={() => this.setState({ resource: 'todos'})}>Todos</button>
-				</div>
+				<button onClick={() => setResource('posts')}>Posts</button>
+				<button onClick={() => setResource('todos')}>Todos</button>
 			</div>
-		);
-	}
+			<ResourceList resource={resource}/>
+		</div>
+	);
 }
 
 export default App;
