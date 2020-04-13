@@ -1,0 +1,25 @@
+{
+  "streams": [
+    {
+      "title": "My Stream",
+      "description": "This is a stream",
+      "id": 1
+    },
+    {
+      "title": "Another Stream",
+      "description": "This is also a stream.",
+      "id": 2
+    },
+    {
+      "title": "Stream with ID",
+      "description": "This stream has an ID!",
+      "id": 6
+    },
+    {
+      "title": "Bush - Hurricane",
+      "description": "Miles of water, miles of water",
+      "userId": "107014043561445444648",
+      "id": 7
+    }
+  ]
+}
