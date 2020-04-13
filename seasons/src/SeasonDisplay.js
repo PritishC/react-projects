@@ -15,7 +15,7 @@ const getSeason = (lat, month) => {
 
 const seasonConfig = {
 	summer: {
-		text: "Let's hit the beach nigga",
+		text: "Let's hit the beach",
 		iconName: "sun"
 	},
 	winter: {
