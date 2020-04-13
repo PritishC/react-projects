@@ -1,7 +1,8 @@
 import React from 'react';
 import UserCreate from './UserCreate';
-import LanguageContext from '../contexts/LanguageContext';
+import { LanguageStore } from '../contexts/LanguageContext';
 import ColorContext from '../contexts/ColorContext';
+import LanguageSelector from './LanguageSelector';
 
 /* Context object lifecycle
  * 1. App loads in browser
@@ -12,30 +13,18 @@ import ColorContext from '../contexts/ColorContext';
  * 6. Button and Field render appropriate text to screen
  */
 class App extends React.Component {
-	state = {
-		language: 'english'
-	}
-
-	onLanguageChange = (language) => {
-		this.setState({ language });
-	}
-
 	render() {
 		return (
 			<div className="ui container">
-				<div>
-					Select a language:
-					<i className="flag us" onClick={() => this.onLanguageChange('english')}></i>
-					<i className="flag in" onClick={() => this.onLanguageChange('hindi')}></i>
-				</div>
-				{/* Anytime the state.language property changes on App, we pass it down via
-					a LanguageContext.Provider wrapper into the UserCreate component.
-					This in turn changes the corresponding text on Field or Button. */}
-				<LanguageContext.Provider value={this.state.language}>
+				<LanguageStore>
+					<LanguageSelector />
+					{/* OLD COMMENT: Anytime the state.language property changes on App, we pass it down via
+						a LanguageContext.Provider wrapper into the UserCreate component.
+						This in turn changes the corresponding text on Field or Button. */}
 					<ColorContext.Provider value="red">
 						<UserCreate></UserCreate>
 					</ColorContext.Provider>
-				</LanguageContext.Provider>
+				</LanguageStore>
 			</div>
 		);
 	}
