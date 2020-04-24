@@ -1,0 +1,4 @@
+[submodule "node-react"]
+	path = node-react
+	url = https://github.com/PritishC/node-react
+	branch = master
